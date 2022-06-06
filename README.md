@@ -1,6 +1,11 @@
 # `rust-musl-builder`: Docker container for easily building static Rust binaries
 
-[![Docker Image](https://img.shields.io/docker/pulls/ekidd/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/ekidd/rust-musl-builder/)
+(mostly) my own stable musl-builder to add some more mdbook plugins
+https://github.com/emk/rust-musl-builder/issues
+
+upgrades to latest libraries, blabla.
+
+[![Docker Image](https://img.shields.io/docker/pulls/elasticdotventures/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/elasticdotventures/rust-musl-builder/)
 
 - [Source on GitHub](https://github.com/emk/rust-musl-builder)
 - [Changelog](https://github.com/emk/rust-musl-builder/blob/master/CHANGELOG.md)
@@ -21,7 +26,7 @@ This image allows you to build static Rust binaries using `diesel`, `sqlx` or `o
 To try it, run:
 
 ```sh
-alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src ekidd/rust-musl-builder'
+alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src elasticdotventures/rust-musl-builder'
 rust-musl-builder cargo build --release
 ```
 
@@ -163,7 +168,7 @@ Next, copy [`build-release`](./examples/build-release) into your project and run
 Finally, add a `Dockerfile` to perform the actual build:
 
 ```Dockerfile
-FROM ekidd/rust-musl-builder
+FROM elasticdotventures/rust-musl-builder
 
 # We need to add the source code to the image because `rust-musl-builder`
 # assumes a UID of 1000, but TravisCI has switched to 2000.
