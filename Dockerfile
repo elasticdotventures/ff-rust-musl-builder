@@ -1,5 +1,5 @@
 # Use Ubuntu 18.04 LTS as our base image.
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 # The Rust toolchain to use when building our image.  Set by `hooks/build`.
 ARG TOOLCHAIN=stable
@@ -22,15 +22,39 @@ ARG OPENSSL_VERSION=1.1.1m
 # - http://zlib.net/
 # - https://ftp.postgresql.org/pub/source/
 #
-# We're stuck on PostgreSQL 11 until we figure out
-# https://github.com/emk/rust-musl-builder/issues.
+# cargo install mdbook-toc 
+# cargo install mdbook-mermaid
+# cargo install mdbook-bib
+# cargo install mdbook-toc 
+# cargo install mdbook-mermaid
+# mdbook-mermaid install
+
+# cargo install svgbob
+# cargo install svgbob_cli
+# cargo install mdbook-svgbob
+# cargo install mdbook-open-on-gh
+# https://github.com/tommilligan/mdbook-admonish
+
+# https://github.com/moby/buildkit
+# DOCKER_BUILDKIT=1 docker build .
+# https://github.com/moby/buildkit
+# DOCKER_BUILDKIT=1 buildah build -t elasticdotventures/ff-rust-musl-builder 
+# https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-arm64.tar.gz
+
 ARG MDBOOK_VERSION=0.4.14
 ARG MDBOOK_GRAPHVIZ_VERSION=0.1.3
+# - https://github.com/badboy/mdbook-toc
+ARG MDBOOK_TOC=0.9.0
+# - https://github.com/francisco-perez-sorrosal/mdbook-bib
+ARG MDBOOK_BIB=0.0.4
+# - https://github.com/ivanceras/svgbob
+
 ARG CARGO_ABOUT_VERSION=0.4.4
 ARG CARGO_AUDIT_VERSION=0.16.0
 ARG CARGO_DENY_VERSION=0.11.0
-ARG ZLIB_VERSION=1.2.11
-ARG POSTGRESQL_VERSION=11.14
+ARG ZLIB_VERSION=1.2.12
+#ARG POSTGRESQL_VERSION=11.14
+ARG POSTGRESQL_VERSION=14.3
 
 # Make sure we have basic dev tools for building C libraries.  Our goal here is
 # to support the musl-libc builds and Cargo builds needed for a large selection
@@ -63,6 +87,9 @@ RUN apt-get update && \
 
 # - `mdbook` is the standard Rust tool for making searchable HTML manuals.
 # - `mdbook-graphviz` allows using inline GraphViz drawing commands to add illustrations.
+# - `mdbook-bib` builds bibliographnes
+
+
 # - `cargo-about` generates a giant license file for all dependencies.
 # - `cargo-audit` checks for security vulnerabilities. We include it for backwards compat.
 # - `cargo-deny` does everything `cargo-audit` does, plus check licenses & many other things.
@@ -86,6 +113,10 @@ RUN curl -fLO https://github.com/rust-lang-nursery/mdBook/releases/download/v$MD
     tar xf cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl.tar.gz && \
     mv cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl/cargo-deny /usr/local/bin/ && \
     rm -rf cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl.tar.gz
+
+# 🙄👆 well this seems like an incredibly stupid way do things
+
+
 
 # Static linking for C++ code
 RUN ln -s "/usr/bin/g++" "/usr/bin/musl-g++"
