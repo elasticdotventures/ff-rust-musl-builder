@@ -100,7 +100,7 @@ jobs:
             org.opencontainers.image.description=FF Tools for statically linked Rust programs using musl-libc
             org.opencontainers.image.url=https://github.com/elasticdotventures/ff-rust-musl-builder
             org.opencontainers.image.source=https://github.com/elasticdotventures/ff-rust-musl-builder
-            net.randomhacks.rust-musl-builder.toolchain=${{ matrix.toolchain }}
+           # net.randomhacks.ff-rust-musl-builder.toolchain=${{ matrix.toolchain }}
 
       - name: Build and push Docker images
         uses: docker/build-push-action@v3.0.0
