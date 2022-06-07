@@ -218,16 +218,16 @@ RUN mkdir -p /home/rust/libs /home/rust/src /home/rust/.cargo && \
 
 # - https://github.com/badboy/mdbook-toc
 ARG MDBOOK_TOC=0.9.0
-RUN cargo install mdbook-toc --vers={$MDBOOK_TOC}
+RUN cargo install mdbook-toc --vers=$MDBOOK_TOC
 
 # - https://github.com/francisco-perez-sorrosal/mdbook-bib
 ARG MDBOOK_BIB=0.0.4
-RUN cargo install mdbook-bib --vers={$MDBOOK_BIB}
+RUN cargo install mdbook-bib --vers=$MDBOOK_BIB
 
 
 # mdbook-mermaid install
 ARG MDBOOK_MERMAID=0.11.0
-RUN cargo install mdbook-mermaid --version={$MDBOOK_MERMAID}
+RUN cargo install mdbook-mermaid --version=$MDBOOK_MERMAID
 # && ~/.cargo/bin/mdbook-mermaid install
 
 # - https://github.com/ivanceras/svgbob
