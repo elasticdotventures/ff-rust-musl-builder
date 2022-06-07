@@ -217,7 +217,8 @@ RUN cargo install mdbook-bib
 
 # mdbook-mermaid install
 ARG MDBOOK_MERMAID=0.11.0
-RUN cargo install mdbook-mermaid && ~/.cargo/bin/mdbook-mermaid install
+RUN cargo install mdbook-mermaid
+# && ~/.cargo/bin/mdbook-mermaid install
 
 # - https://github.com/ivanceras/svgbob
 # RUN cargo install svgbob 
