@@ -26,7 +26,6 @@ ARG OPENSSL_VERSION=1.1.1m
 # cargo install mdbook-mermaid
 # cargo install mdbook-bib
 # cargo install mdbook-toc 
-# cargo install mdbook-mermaid
 # mdbook-mermaid install
 
 # cargo install svgbob
@@ -38,7 +37,7 @@ ARG OPENSSL_VERSION=1.1.1m
 # https://github.com/moby/buildkit
 # DOCKER_BUILDKIT=1 docker build .
 # https://github.com/moby/buildkit
-# DOCKER_BUILDKIT=1 buildah build -t elasticdotventures/ff-rust-musl-builder 
+# DOCKER_BUILDKIT=1 docker build -t elasticdotventures/ff-rust-musl-builder .
 # https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-arm64.tar.gz
 
 ARG MDBOOK_VERSION=0.4.14
@@ -48,6 +47,7 @@ ARG MDBOOK_TOC=0.9.0
 # - https://github.com/francisco-perez-sorrosal/mdbook-bib
 ARG MDBOOK_BIB=0.0.4
 # - https://github.com/ivanceras/svgbob
+ARG MDBOOK_MERMAID=0.11.0
 
 ARG CARGO_ABOUT_VERSION=0.4.4
 ARG CARGO_AUDIT_VERSION=0.16.0
