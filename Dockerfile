@@ -1,6 +1,15 @@
 # Use Ubuntu 18.04 LTS as our base image.
 FROM ubuntu:22.04
 
+# USAGE NOTES: 
+# https://github.com/moby/buildkit
+# DOCKER_BUILDKIT=1 docker build .
+# https://github.com/moby/buildkit
+# DOCKER_BUILDKIT=1 docker build -t elasticdotventures/ff-rust-musl-builder .
+# https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-arm64.tar.gz
+
+
+
 # The Rust toolchain to use when building our image.  Set by `hooks/build`.
 ARG TOOLCHAIN=stable
 
@@ -9,7 +18,8 @@ ARG TOOLCHAIN=stable
 # - https://www.openssl.org/source/
 #
 # ALSO UPDATE hooks/build!
-ARG OPENSSL_VERSION=3.0.3
+#ARG OPENSSL_VERSION=3.0.3
+ARG OPENSSL_VERSION=1.1.1m
 
 # Versions for other dependencies. Here are the places to check for new
 # releases:
@@ -21,40 +31,14 @@ ARG OPENSSL_VERSION=3.0.3
 # - https://github.com/EmbarkStudios/cargo-deny/releases
 # - http://zlib.net/
 # - https://ftp.postgresql.org/pub/source/
-#
-# cargo install mdbook-toc 
-# cargo install mdbook-mermaid
-# cargo install mdbook-bib
-# cargo install mdbook-toc 
-# mdbook-mermaid install
-
-# cargo install svgbob
-# cargo install svgbob_cli
-# cargo install mdbook-svgbob
-# cargo install mdbook-open-on-gh
-# https://github.com/tommilligan/mdbook-admonish
-
-# https://github.com/moby/buildkit
-# DOCKER_BUILDKIT=1 docker build .
-# https://github.com/moby/buildkit
-# DOCKER_BUILDKIT=1 docker build -t elasticdotventures/ff-rust-musl-builder .
-# https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-arm64.tar.gz
-
-ARG MDBOOK_VERSION=0.4.14
-ARG MDBOOK_GRAPHVIZ_VERSION=0.1.3
-# - https://github.com/badboy/mdbook-toc
-ARG MDBOOK_TOC=0.9.0
-# - https://github.com/francisco-perez-sorrosal/mdbook-bib
-ARG MDBOOK_BIB=0.0.4
-# - https://github.com/ivanceras/svgbob
-ARG MDBOOK_MERMAID=0.11.0
-
 ARG CARGO_ABOUT_VERSION=0.4.4
 ARG CARGO_AUDIT_VERSION=0.16.0
 ARG CARGO_DENY_VERSION=0.11.0
 ARG ZLIB_VERSION=1.2.12
 #ARG POSTGRESQL_VERSION=11.14
 ARG POSTGRESQL_VERSION=14.3
+ARG MDBOOK_VERSION=0.4.14
+ARG MDBOOK_GRAPHVIZ_VERSION=0.1.3
 
 # Make sure we have basic dev tools for building C libraries.  Our goal here is
 # to support the musl-libc builds and Cargo builds needed for a large selection
@@ -115,6 +99,9 @@ RUN curl -fLO https://github.com/rust-lang-nursery/mdBook/releases/download/v$MD
     rm -rf cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl cargo-deny-$CARGO_DENY_VERSION-x86_64-unknown-linux-musl.tar.gz
 
 # 🙄👆 well this seems like an incredibly stupid way do things
+# more mdbook .. 
+
+
 
 
 
@@ -218,6 +205,31 @@ RUN env CARGO_HOME=/opt/rust/cargo cargo install -f cargo-deb && \
 
 # Allow sudo without a password.
 ADD sudoers /etc/sudoers.d/nopasswd
+
+# - https://github.com/badboy/mdbook-toc
+ARG MDBOOK_TOC=0.9.0
+RUN cargo install mdbook-toc
+
+# - https://github.com/francisco-perez-sorrosal/mdbook-bib
+ARG MDBOOK_BIB=0.0.4
+RUN cargo install mdbook-bib
+
+
+# mdbook-mermaid install
+ARG MDBOOK_MERMAID=0.11.0
+RUN cargo install mdbook-mermaid && mdbook-mermaid install
+
+# - https://github.com/ivanceras/svgbob
+# RUN cargo install svgbob 
+RUN cargo install svgbob_cli
+RUN cargo install mdbook-svgbob
+
+# open on github
+RUN cargo install mdbook-open-on-gh
+
+# - https://github.com/tommilligan/mdbook-admonish
+
+
 
 # Run all further code as user `rust`, create our working directories, install
 # our config file, and set up our credential helper.
