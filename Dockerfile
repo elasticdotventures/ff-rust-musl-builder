@@ -9,7 +9,7 @@ ARG TOOLCHAIN=stable
 # - https://www.openssl.org/source/
 #
 # ALSO UPDATE hooks/build!
-ARG OPENSSL_VERSION=1.1.1m
+ARG OPENSSL_VERSION=3.0.3
 
 # Versions for other dependencies. Here are the places to check for new
 # releases:
