@@ -93,8 +93,8 @@ jobs:
           #  ${{ matrix.toolchain == 'stable' && 'ghcr.io/emk/rust-musl-builder:latest' || '' }}
           #  ${{ matrix.toolchain == 'stable' && 'ekidd/rust-musl-builder:latest' || '' }}
           tags: |
-            ghcr.io/elasticdotventures/rust-musl-builder:${{ matrix.toolchain }}
-            ${{ matrix.toolchain == 'stable' && 'ghcr.io/elasticdotventures/rust-musl-builder:latest' || '' }}
+            ghcr.io/elasticdotventures/ff-rust-musl-builder:${{ matrix.toolchain }}
+            ${{ matrix.toolchain == 'stable' && 'ghcr.io/elasticdotventures/ff-rust-musl-builder:latest' || '' }}
           labels: |
             org.opencontainers.image.title=ff-rust-musl-builder
             org.opencontainers.image.description=FF Tools for statically linked Rust programs using musl-libc
