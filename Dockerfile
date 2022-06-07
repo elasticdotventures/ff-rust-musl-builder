@@ -206,18 +206,28 @@ RUN env CARGO_HOME=/opt/rust/cargo cargo install -f cargo-deb && \
 # Allow sudo without a password.
 ADD sudoers /etc/sudoers.d/nopasswd
 
+# Run all further code as user `rust`, create our working directories, install
+# our config file, and set up our credential helper.
+#
+# You should be able to switch back to `USER root` from another `Dockerfile`
+# using this image if you need to do so.
+USER rust
+RUN mkdir -p /home/rust/libs /home/rust/src /home/rust/.cargo && \
+    ln -s /opt/rust/cargo/config /home/rust/.cargo/config && \
+    git config --global credential.https://github.com.helper ghtoken
+
 # - https://github.com/badboy/mdbook-toc
 ARG MDBOOK_TOC=0.9.0
-RUN cargo install mdbook-toc
+RUN cargo install mdbook-toc --vers={$MDBOOK_TOC}
 
 # - https://github.com/francisco-perez-sorrosal/mdbook-bib
 ARG MDBOOK_BIB=0.0.4
-RUN cargo install mdbook-bib
+RUN cargo install mdbook-bib --vers={$MDBOOK_BIB}
 
 
 # mdbook-mermaid install
 ARG MDBOOK_MERMAID=0.11.0
-RUN cargo install mdbook-mermaid
+RUN cargo install mdbook-mermaid --version={$MDBOOK_MERMAID}
 # && ~/.cargo/bin/mdbook-mermaid install
 
 # - https://github.com/ivanceras/svgbob
@@ -229,18 +239,8 @@ RUN cargo install mdbook-svgbob
 RUN cargo install mdbook-open-on-gh
 
 # - https://github.com/tommilligan/mdbook-admonish
+RUN cargo install mdbook-admonish
 
-
-
-# Run all further code as user `rust`, create our working directories, install
-# our config file, and set up our credential helper.
-#
-# You should be able to switch back to `USER root` from another `Dockerfile`
-# using this image if you need to do so.
-USER rust
-RUN mkdir -p /home/rust/libs /home/rust/src /home/rust/.cargo && \
-    ln -s /opt/rust/cargo/config /home/rust/.cargo/config && \
-    git config --global credential.https://github.com.helper ghtoken
 
 # Expect our source code to live in /home/rust/src.  We'll run the build as
 # user `rust`, which will be uid 1000, gid 1000 outside the container.
