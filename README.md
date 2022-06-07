@@ -26,8 +26,9 @@ This image allows you to build static Rust binaries using `diesel`, `sqlx` or `o
 To try it, run:
 
 ```sh
-alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src elasticdotventures/rust-musl-builder'
+alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src elasticdotventures/ff-rust-musl-builder'
 rust-musl-builder cargo build --release
+rust-musl-builder mdbook build
 ```
 
 This command assumes that `$(pwd)` is readable and writable by uid 1000, gid 1000. At the moment, it doesn't attempt to cache libraries between builds, so this is best reserved for making final release builds.
