@@ -8,6 +8,9 @@ FROM ubuntu:22.04
 # DOCKER_BUILDKIT=1 docker build -t elasticdotventures/ff-rust-musl-builder .
 # https://github.com/moby/buildkit/releases/download/v0.10.3/buildkit-v0.10.3.linux-arm64.tar.gz
 
+# docker inspect ghcr.io/elasticdotventures/ff-rust-musl-builder
+# docker pull ghcr.io/elasticdotventures/ff-rust-musl-builder
+
 
 
 # The Rust toolchain to use when building our image.  Set by `hooks/build`.
