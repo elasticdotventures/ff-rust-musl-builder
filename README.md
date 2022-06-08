@@ -5,10 +5,9 @@ https://github.com/emk/rust-musl-builder/issues
 
 upgrades to latest libraries, blabla.
 
-[![Docker Image](https://img.shields.io/docker/pulls/elasticdotventures/rust-musl-builder.svg?maxAge=2592000)](https://hub.docker.com/r/elasticdotventures/rust-musl-builder/)
-
-- [Source on GitHub](https://github.com/emk/rust-musl-builder)
-- [Changelog](https://github.com/emk/rust-musl-builder/blob/master/CHANGELOG.md)
+<!--
+[![Docker Image](https://img.shields.io/docker/pulls/elasticdotventures/ff-rust-musl-builder.svg?maxAge=2592000)](https://ghcr.io/elasticdotventures/ff-rust-musl-builder/)
+-->
 
 **UPDATED:** We are now running builds on GitHub, including scheduled builds of `stable` and `beta` every Thursday!
 
