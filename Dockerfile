@@ -184,7 +184,11 @@ RUN curl https://sh.rustup.rs -sSf | \
     env CARGO_HOME=/opt/rust/cargo \
         rustup component add clippy && \
     env CARGO_HOME=/opt/rust/cargo \
-        rustup target add x86_64-unknown-linux-musl
+        rustup target add x86_64-unknown-linux-musl && \
+    env CARGO_HOME=/opt/rust/cargo \
+        rustup target add wasm32-unknown-unknown
+
+
 ADD cargo-config.toml /opt/rust/cargo/config
 
 # Set up our environment variables so that we cross-compile using musl-libc by
@@ -221,29 +225,35 @@ RUN mkdir -p /home/rust/libs /home/rust/src /home/rust/.cargo && \
 
 # - https://github.com/badboy/mdbook-toc
 ARG MDBOOK_TOC=0.9.0
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-toc --vers=$MDBOOK_TOC
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-toc --vers=$MDBOOK_TOC
 
 # - https://github.com/francisco-perez-sorrosal/mdbook-bib
 ARG MDBOOK_BIB=0.0.4
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-bib --vers=$MDBOOK_BIB
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-bib --vers=$MDBOOK_BIB
 
 
 # mdbook-mermaid install
 ARG MDBOOK_MERMAID=0.11.0
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-mermaid --version=$MDBOOK_MERMAID
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-mermaid --version=$MDBOOK_MERMAID
 # && ~/.cargo/bin/mdbook-mermaid install
 
 # - https://github.com/ivanceras/svgbob
 # RUN cargo install svgbob 
-RUN env CARGO_HOME=/opt/rust/cargo cargo install svgbob_cli
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-svgbob
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install svgbob_cli
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-svgbob
 
 # open on github
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-open-on-gh
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-open-on-gh
 
 # - https://github.com/tommilligan/mdbook-admonish
-RUN env CARGO_HOME=/opt/rust/cargo cargo install mdbook-admonish
-
+RUN env CARGO_HOME=/home/rust/.cargo \
+    cargo install mdbook-admonish
 
 # Expect our source code to live in /home/rust/src.  We'll run the build as
 # user `rust`, which will be uid 1000, gid 1000 outside the container.
